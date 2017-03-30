@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Button android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:text="test"
+    android:paddingStart="3dp"
+    android:paddingEnd="3dp"
+    android:transitionName="schedule_detail"
+    tools:targetApi="LOLLIPOP"
+    android:textSize="14sp"
+    android:id="@+id/button"
+    android:theme="@style/ButtonGreen"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+
+
+

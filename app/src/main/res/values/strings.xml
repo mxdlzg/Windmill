@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Windmill</string>
+    <string name="navigation_open">openDrawer</string>
+    <string name="navigation_close">closeDrawer</string>
+</resources>

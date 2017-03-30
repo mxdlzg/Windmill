@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatButton
+        android:textColor="@color/white"
+        android:id="@+id/schedule_detail_btn"
+        android:transitionName="schedule_detail" tools:targetApi="LOLLIPOP"
+        app:backgroundTint="@color/blue500"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--<Button-->
+        <!--android:transitionName="schedule_detail" tools:targetApi="LOLLIPOP"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/ButtonBlue"/>-->
+</LinearLayout>

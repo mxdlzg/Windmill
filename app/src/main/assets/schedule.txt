@@ -1,0 +1,286 @@
+<html>
+<head>
+    <title>我的选课</title>
+    <link rel="stylesheet" href="../main.css">
+    <style>
+        td{font-size:9pt}
+    </style>
+    <script language="javascript" src="AppSetting.js"></script>
+    <script language="JavaScript">
+
+    </script>
+</head>
+<body>
+
+
+
+
+<form name="form1" method="post">
+    <table align="center" width="85%" border="0" cellspacing="1" bgcolor="black">
+        <div align="center"><b>2016-2017第2学期 我的课表(理论课)</b></div>
+        <div align="right" style="margin:12px">
+            <a class="pad1" href="syllabuslist.jsp?yearTerm=2017春&yearTerm2=2016-2017第2学期&cType=1">总课表</a>
+            <a class="pad2" href="syllabuslist2.jsp?yearTerm=2017春&yearTerm2=2016-2017第2学期&cType=1">周课表</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="pad1" href="search2.jsp">返 回</a>
+        </div>
+        <tr bgcolor="white" >
+            <th class="list" colspan="8" align="left"><strong>课程表</strong></th>
+        </tr>
+        <tr bgcolor="white" ><th width="4%" ><strong><nobr>节次</nobr></strong></th><th width="14%" ><strong>星期一</strong></th><th width="14%" ><strong>星期二</strong></th><th width="14%" ><strong>星期三</strong></th>
+            <th width="14%" ><strong>星期四</strong></th><th width="14%" ><strong>星期五</strong></th><th  width="13%" ><strong>星期六</strong></th><th width="13%" ><strong>星期天</strong></th></tr>
+
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>1</td>
+            <td  class="list">  </td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,59)' onmouseout='do2(this,59)'>体育4羽毛球（男）<br>第1-16周 奉贤操场<br>1656628 杨德洪</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d59' >课程全称：体育4羽毛球（男）<br>学分：0.5</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,5)' onmouseout='do2(this,5)'>数据库原理及应用<br>第8-14周 #二教H305<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d5' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,7)' onmouseout='do2(this,7)'>数据库原理及应用<br>第7周 奉计8（三教208）<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d7' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,11)' onmouseout='do2(this,11)'>数据库原理及应用<br>第5-6周 #二教H305<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d11' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,15)' onmouseout='do2(this,15)'>数据库原理及应用<br>第4周 奉计2(三教108)<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d15' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,23)' onmouseout='do2(this,23)'>数据库原理及应用<br>第1-3周 #二教H305<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d23' >课程全称：数据库原理及应用<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,37)' onmouseout='do2(this,37)'>概率论与数理统计<br>第1-16周 二教E304<br>1652298 徐小明</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d37' >课程全称：概率论与数理统计<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,25)' onmouseout='do2(this,25)'>软件工程导论<br>第1-14周 二教E310<br>1651684 张蕊</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d25' >课程全称：软件工程导论<br>学分：3</div></td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>2</td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>3</td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,29)' onmouseout='do2(this,29)'>操作系统<br>第9-14周 奉计2(三教108)<br>1651699 徐克奇</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d29' >课程全称：操作系统<br>学分：3</div><div name='d1' onmouseover='do1(this,31)' onmouseout='do2(this,31)'>操作系统<br>第7-8周 奉计7（三教213）<br>1651699 徐克奇</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d31' >课程全称：操作系统<br>学分：3</div><div name='d1' onmouseover='do1(this,33)' onmouseout='do2(this,33)'>操作系统<br>第1-6周 二教E304<br>1651699 徐克奇</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d33' >课程全称：操作系统<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,45)' onmouseout='do2(this,45)'>毛泽东思想和中国特色社会主义理论体系概论（上）<br>第8-9周 奉贤虚拟<br>1655577 孔文清</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d45' >课程全称：毛泽东思想和中国特色社会主义理论体系概论（上）<br>学分：3</div><div name='d1' onmouseover='do1(this,49)' onmouseout='do2(this,49)'>毛泽东思想和中国特色社会主义理论体系概论（上）<br>第10-16周 #二教E101<br>1655577 孔文清</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d49' >课程全称：毛泽东思想和中国特色社会主义理论体系概论（上）<br>学分：3</div><div name='d1' onmouseover='do1(this,53)' onmouseout='do2(this,53)'>毛泽东思想和中国特色社会主义理论体系概论（上）<br>第1-7周 #二教E101<br>1655577 孔文清</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d53' >课程全称：毛泽东思想和中国特色社会主义理论体系概论（上）<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,27)' onmouseout='do2(this,27)'>软件工程导论<br>第1-14周 二教E310<br>1651684 张蕊</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d27' >课程全称：软件工程导论<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,41)' onmouseout='do2(this,41)'>JAVA程序设计<br>第1-16周* 二教E304<br>1652463 刘胤杰</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d41' >课程全称：JAVA程序设计<br>学分：2.5</div><div name='d1' onmouseover='do1(this,46)' onmouseout='do2(this,46)'>毛泽东思想和中国特色社会主义理论体系概论（上）<br>第8-9周** 奉贤虚拟<br>1655577 孔文清</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d46' >课程全称：毛泽东思想和中国特色社会主义理论体系概论（上）<br>学分：3</div><div name='d1' onmouseover='do1(this,50)' onmouseout='do2(this,50)'>毛泽东思想和中国特色社会主义理论体系概论（上）<br>第10-16周** #二教E101<br>1655577 孔文清</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d50' >课程全称：毛泽东思想和中国特色社会主义理论体系概论（上）<br>学分：3</div><div name='d1' onmouseover='do1(this,54)' onmouseout='do2(this,54)'>毛泽东思想和中国特色社会主义理论体系概论（上）<br>第1-7周** #二教E101<br>1655577 孔文清</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d54' >课程全称：毛泽东思想和中国特色社会主义理论体系概论（上）<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,1)' onmouseout='do2(this,1)'>专门学术英语<br>第1-16周 #一教A112<br>1650401 范懿明</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d1' >课程全称：专门学术英语<br>学分：2</div></td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>4</td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>5</td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,39)' onmouseout='do2(this,39)'>概率论与数理统计<br>第1-16周** 二教E304<br>1652298 徐小明</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d39' >课程全称：概率论与数理统计<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,43)' onmouseout='do2(this,43)'>JAVA程序设计<br>第1-16周 二教E304<br>1652463 刘胤杰</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d43' >课程全称：JAVA程序设计<br>学分：2.5</div></td>
+            <td  class="list">  </td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,35)' onmouseout='do2(this,35)'>操作系统<br>第1-14周 二教E304<br>1651699 徐克奇</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d35' >课程全称：操作系统<br>学分：3</div></td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>6</td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>7</td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,3)' onmouseout='do2(this,3)'>数据库原理及应用<br>第9-12周 奉计2(三教108)<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d3' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,9)' onmouseout='do2(this,9)'>数据库原理及应用<br>第6-8周 二教H406<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d9' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,13)' onmouseout='do2(this,13)'>数据库原理及应用<br>第5周 奉计2(三教108)<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d13' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,17)' onmouseout='do2(this,17)'>数据库原理及应用<br>第4周 奉计2(三教108)<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d17' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,19)' onmouseout='do2(this,19)'>数据库原理及应用<br>第13-14周 二教H406<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d19' >课程全称：数据库原理及应用<br>学分：3</div><div name='d1' onmouseover='do1(this,21)' onmouseout='do2(this,21)'>数据库原理及应用<br>第1-3周 二教H406<br>1651667 张裕</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d21' >课程全称：数据库原理及应用<br>学分：3</div></td>
+            <td rowspan="2" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,57)' onmouseout='do2(this,57)'>形势与政策（4）<br>第2-8周** 一教C103<br>1656433 王雪敏</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d57' >课程全称：形势与政策（4）<br>学分：0.5</div></td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>8</td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>9</td>
+            <td rowspan="3" style="font-size=9pt">
+                <div name='d1' onmouseover='do1(this,61)' onmouseout='do2(this,61)'>生活中的经济学<br>第4-13周 #二教H105<br>1657471 张金科</div><div style='border:1px; background-color:#5079AB;color:white;position:absolute;z-index:1;display:none;width=200px;' id='d61' >课程全称：生活中的经济学<br>学分：2</div></td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>10</td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>11</td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+        <tr bgcolor="white">
+            <td   style="font-size=9pt" align=center>12</td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+            <td  class="list">  </td>
+        </tr>
+
+        <input type="hidden" name="Weeklys" value="4"/>
+
+    </table>
+
+
+
+
+
+    <table align="center">
+        <tr><td>注：以上列表课程名称后*为单周，**为双周</td></tr>
+    </table>
+    <br>
+    <!--课表详细信息-->
+    <!--理论课-->
+
+    <table align="center" width="85%" border="0" cellspacing="1" bgcolor="black">
+        <tr bgcolor="white" >
+            <th class="list" colspan="9" align="left"><strong>课程详细信息</strong></th>
+        </tr>
+        <tr bgcolor="white">
+            <th >课程全称</th><th >学分</th><th >课程代码</th><th >课程序号</th><th >教师</th><th >答疑时间</th><th >备注</th>
+        </tr>
+        <tr bgcolor="white">
+            <td>专门学术英语</td>
+            <td>2</td>
+            <td>B1110618</td>
+            <td>1650401</td>
+            <td>范懿明</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>数据库原理及应用</td>
+            <td>3</td>
+            <td>B204207</td>
+            <td>1651667</td>
+            <td>张裕</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>软件工程导论</td>
+            <td>3</td>
+            <td>B2042302</td>
+            <td>1651684</td>
+            <td>张蕊</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>操作系统</td>
+            <td>3</td>
+            <td>B2042316</td>
+            <td>1651699</td>
+            <td>徐克奇</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>概率论与数理统计</td>
+            <td>3</td>
+            <td>B2220073</td>
+            <td>1652298</td>
+            <td>徐小明</td>
+            <td></td>
+            <td>22卓越</td>
+        </tr>
+        <tr bgcolor="white">
+            <td>JAVA程序设计</td>
+            <td>2.5</td>
+            <td>B304267</td>
+            <td>1652463</td>
+            <td>刘胤杰</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>毛泽东思想和中国特色社会主义理论体系概论（上）</td>
+            <td>3</td>
+            <td>B121012</td>
+            <td>1655577</td>
+            <td>孔文清</td>
+            <td></td>
+            <td>28卓越</td>
+        </tr>
+        <tr bgcolor="white">
+            <td>形势与政策（4）</td>
+            <td>0.5</td>
+            <td>B1280004</td>
+            <td>1656433</td>
+            <td>王雪敏</td>
+            <td></td>
+            <td>28卓越</td>
+        </tr>
+        <tr bgcolor="white">
+            <td>体育4羽毛球（男）</td>
+            <td>0.5</td>
+            <td>S1230142F</td>
+            <td>1656628</td>
+            <td>杨德洪</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr bgcolor="white">
+            <td>生活中的经济学</td>
+            <td>2</td>
+            <td>G5100036</td>
+            <td>1657471</td>
+            <td>张金科</td>
+            <td></td>
+            <td>10通识</td>
+        </tr>
+
+    </table>
+    <!--实践课-->
+
+</form>
+
+
+
+
+
+<table align="center" width="88%" border="0" cellspacing="1">
+    <tr bgcolor="white" align="left"><th><strong><nobr>调课信息:</nobr></strong></th></tr>
+    <tr bgcolor="white"><td>无</td></tr>
+
+    <tr bgcolor="white" align="left"><th><strong><nobr>代课信息:</nobr></strong></th></tr>
+    <tr bgcolor="white"><td>无</td></tr>
+
+    <tr bgcolor="white" align="left"><th><strong><nobr>停课信息:</nobr></strong></th></tr>
+    <tr bgcolor="white"><td>无</td></tr>
+
+</table>
+</body>
+</html>
