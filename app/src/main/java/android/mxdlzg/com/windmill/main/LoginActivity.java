@@ -72,15 +72,7 @@ public class LoginActivity extends AppCompatActivity{
                 }
             }
         });
-        buttonLogin.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ManageCookie manageCookie = new ManageCookie(LoginActivity.this);
-                manageCookie.getCookieFromCache(Config.NET_COOKIE_CACHE);
-                manageCookie.getNetCookieStore();
-                return false;
-            }
-        });
+
     }
 
     private int Login(String user,String password){
