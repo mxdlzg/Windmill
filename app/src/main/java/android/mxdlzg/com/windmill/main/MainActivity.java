@@ -15,6 +15,7 @@ import android.mxdlzg.com.windmill.config.ClassOBJ;
 import android.mxdlzg.com.windmill.config.Config;
 import android.mxdlzg.com.windmill.config.TermOBJ;
 import android.mxdlzg.com.windmill.local.ManageClassOBJ;
+import android.mxdlzg.com.windmill.local.ManageCookie;
 import android.mxdlzg.com.windmill.local.ManageSetting;
 import android.mxdlzg.com.windmill.net.GetCookie;
 import android.mxdlzg.com.windmill.net.GetSchedule;
@@ -69,6 +70,8 @@ import java.util.Random;
 
 import noman.weekcalendar.WeekCalendar;
 
+import static android.mxdlzg.com.windmill.util.wdUtil.dip2px;
+
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -86,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
     private String yearTerm2 = "2016-2017第2学期";
     private String scheduleHTML = "";
 
-    private Long currentId;
-    private int currentWeek;
+    private Long currentId; //当前课程表的uuid
+    private int currentWeek; //当前周,1开始
 
     private List<ClassOBJ> classList;
 
@@ -98,13 +101,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
 
-        final Handler handler = new Handler(getMainLooper()){
-            @Override
-            public void handleMessage(Message msg) {
-                cookieStore = (CookieStore) msg.obj;
-                Toast.makeText(MainActivity.this, "cookie获取完毕", Toast.LENGTH_SHORT).show();
-            }
-        };
         final Handler scheduleHandler = new Handler(getMainLooper()){
             @Override
             public void handleMessage(Message msg) {
@@ -118,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
         DateFormat format = new SimpleDateFormat("MM");
         toolbar.setTitle(format.format(System.currentTimeMillis())+"月");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //drawerLayout
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
@@ -127,35 +121,16 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        //初始化设置
+        initSetting();
+
+        ManageCookie manageCookie = new ManageCookie(this);
+
+
         //设置默认cookieManager
         CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
-
-        //准备cookie
-//        final ProgressDialog progressDialog = ProgressDialog.show(this,"登录","正在登录并获取cookie",true,false);
-//        new GetCookie(new GetCookie.getCookieCallback() {
-//            @Override
-//            public void cookieStore(CookieStore cookieStore) {
-//                progressDialog.dismiss();
-//                System.out.println(cookieStore);
-//                Message message = new Message();
-//                message.obj = cookieStore;
-//                handler.sendMessage(message);
-//            }
-//        }, new GetCookie.FailCallback() {
-//            @Override
-//            public void onFail(int status) {
-//
-//            }
-//        });
-
-        //niceSpinner
-
-
-        //
-        currentId = 0L;
-        currentWeek = 6;
 
         //niceSpinner设置
         niceSpinner = (NiceSpinner) findViewById(R.id.schedule_niceSpinner);
@@ -179,13 +154,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         //
-        if (ManageSetting.getLongSetting(this,"id")!=0){
-            classList = ManageClassOBJ.getClassList(MainActivity.this,2016220172);
+        if (currentId!=0){
+            classList = ManageClassOBJ.getClassList(MainActivity.this,currentId);
             prepareScheduleTable(currentWeek);
         }else {
             classList = new ArrayList<>();
         }
 
+        //imageview
+        View headerView = navigationView.inflateHeaderView(R.layout.layout_main_nav_header);
+        imageView = (ImageView)(headerView.findViewById(R.id.drawer_imageView));
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            }
+        });
 
 
         //获取calendarview
@@ -200,132 +184,10 @@ public class MainActivity extends AppCompatActivity {
         schedule_btn_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                calendarView.setVisibility(View.VISIBLE);
                 if (calendarView.getVisibility() != View.VISIBLE){
-                    final ValueAnimator animator =  ValueAnimator.ofInt(dip2px(MainActivity.this, Config.CALENDAR_MINHEIGHT),dip2px(MainActivity.this,Config.CALENDAR_MAXHEIGHT));
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            schedule_calendar.getLayoutParams().height = (int) animator.getAnimatedValue();
-                            schedule_calendar.requestLayout();
-                        }
-                    });
-                    animator.setDuration(300);
-
-                    final ValueAnimator alphaAnimator = ValueAnimator.ofFloat(1,0);
-                    alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-//                            System.out.println(alphaAnimator.getAnimatedValue());
-                            weekCalendar.setAlpha((Float) alphaAnimator.getAnimatedValue());
-                            calendarView.setAlpha(1-(float)alphaAnimator.getAnimatedValue());
-                        }
-                    });
-                    alphaAnimator.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            weekCalendar.setVisibility(View.GONE);
-                            calendarView.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-                    alphaAnimator.setDuration(200);
-
-                    AnimatorSet animatorSet = new AnimatorSet();
-                    animatorSet.playTogether(alphaAnimator,animator);
-                    animatorSet.start();
-
-//                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) schedule_calendar.getLayoutParams();
-//                    params.height = dip2px(MainActivity.this,300);
-//                    params.height = calendarView.getBottom();
-//                    schedule_calendar.setLayoutParams(params);
+                    animatorShow();
                 }else {
-                    final ValueAnimator animator =  ValueAnimator.ofInt(dip2px(MainActivity.this,Config.CALENDAR_MAXHEIGHT),dip2px(MainActivity.this,Config.CALENDAR_MINHEIGHT));
-                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            schedule_calendar.getLayoutParams().height = (int) animator.getAnimatedValue();
-                            schedule_calendar.requestLayout();
-                        }
-                    });
-                    animator.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            weekCalendar.setVisibility(View.VISIBLE);
-                            calendarView.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-                    animator.setDuration(300);
-
-                    final ValueAnimator alphaAnimator = ValueAnimator.ofFloat(1,0);
-                    alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-//                            System.out.println(alphaAnimator.getAnimatedValue());
-                            calendarView.setAlpha((Float) alphaAnimator.getAnimatedValue());
-                            weekCalendar.setAlpha(1-(float)alphaAnimator.getAnimatedValue());
-                        }
-                    });
-                    alphaAnimator.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            weekCalendar.setVisibility(View.VISIBLE);
-                            calendarView.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-                    alphaAnimator.setDuration(200);
-
-                    AnimatorSet animatorSet = new AnimatorSet();
-                    animatorSet.playTogether(alphaAnimator,animator);
-                    animatorSet.start();
-
-//                    ViewGroup.LayoutParams params =  schedule_calendar.getLayoutParams();
-//                    params.height = weekCalendar.getHeight();
-//                    schedule_calendar.setLayoutParams(params);
+                    animatorDismiss();
                 }
             }
         });
@@ -338,38 +200,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_camera:
-//                        ManageClassOBJ.cacheClassList(MainActivity.this,2016220172,classList);
-//                        List<ClassOBJ> list = ManageClassOBJ.getClassList(MainActivity.this,2016220172);
                         break;
                     case R.id.nav_gallery:
                         drawerLayout.closeDrawers();
-
-                        final List<BasicNameValuePair> parameters = new ArrayList<>();
-                        parameters.add(new BasicNameValuePair("yearTerm",yearTerm));
-                        parameters.add(new BasicNameValuePair("cType",cType));
-                        parameters.add(new BasicNameValuePair("yearTerm2",yearTerm2));
-
-                        new GetSchedule(new GetSchedule.SuccessCallback() {
-                            @Override
-                            public void onSuccess(String result) {
-                                System.out.println(result);
-                                Message message = new Message();
-                                message.obj = result;
-                                scheduleHandler.sendMessage(message);
-                            }
-                        }, new GetSchedule.FailCallback() {
-                            @Override
-                            public void onFail() {
-                                Toast.makeText(MainActivity.this, "获取失败", Toast.LENGTH_SHORT).show();
-                            }
-                        },cookieStore,parameters,"http://ems.sit.edu.cn:85/student/selCourse/syllabuslist.jsp");
-
                         break;
                     case R.id.nav_slideshow:
                         drawerLayout.closeDrawers();
-//                        getSchedule();
-//                        PrepareSchedule p = new PrepareSchedule();
-//                        classList = p.getList(scheduleHTML);
                         classList = ManageClassOBJ.getClassList(MainActivity.this,2016220172);
                         System.out.println(classList.get(0).getName());
                         Toast.makeText(MainActivity.this,"加载完毕"+ classList.get(0).getName(), Toast.LENGTH_SHORT).show();
@@ -391,18 +227,142 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
 
-        //imageview
-        View headerView = navigationView.inflateHeaderView(R.layout.layout_main_nav_header);
-        imageView = (ImageView)(headerView.findViewById(R.id.drawer_imageView));
-        imageView.setOnClickListener(new View.OnClickListener() {
+    /**
+     * 初始化设置
+     */
+    public void initSetting(){
+        currentId = ManageSetting.getLongSetting(this,"id");
+        currentWeek = 6;
+    }
+
+    /**
+     * 显示calendar
+     */
+    public void animatorShow(){
+        final ValueAnimator animator =  ValueAnimator.ofInt(dip2px(MainActivity.this, Config.CALENDAR_MINHEIGHT),dip2px(MainActivity.this,Config.CALENDAR_MAXHEIGHT));
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            public void onAnimationUpdate(ValueAnimator animation) {
+                schedule_calendar.getLayoutParams().height = (int) animator.getAnimatedValue();
+                schedule_calendar.requestLayout();
             }
         });
+        animator.setDuration(300);
 
+        final ValueAnimator alphaAnimator = ValueAnimator.ofFloat(1,0);
+        alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+//                            System.out.println(alphaAnimator.getAnimatedValue());
+                weekCalendar.setAlpha((Float) alphaAnimator.getAnimatedValue());
+                calendarView.setAlpha(1-(float)alphaAnimator.getAnimatedValue());
+            }
+        });
+        alphaAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                weekCalendar.setVisibility(View.GONE);
+                calendarView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        alphaAnimator.setDuration(200);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(alphaAnimator,animator);
+        animatorSet.start();
     }
+
+    /**
+     * 隐藏calendar
+     */
+    public void animatorDismiss(){
+        final ValueAnimator animator =  ValueAnimator.ofInt(dip2px(MainActivity.this,Config.CALENDAR_MAXHEIGHT),dip2px(MainActivity.this,Config.CALENDAR_MINHEIGHT));
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                schedule_calendar.getLayoutParams().height = (int) animator.getAnimatedValue();
+                schedule_calendar.requestLayout();
+            }
+        });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                weekCalendar.setVisibility(View.VISIBLE);
+                calendarView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animator.setDuration(300);
+
+        final ValueAnimator alphaAnimator = ValueAnimator.ofFloat(1,0);
+        alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+//                            System.out.println(alphaAnimator.getAnimatedValue());
+                calendarView.setAlpha((Float) alphaAnimator.getAnimatedValue());
+                weekCalendar.setAlpha(1-(float)alphaAnimator.getAnimatedValue());
+            }
+        });
+        alphaAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                weekCalendar.setVisibility(View.VISIBLE);
+                calendarView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        alphaAnimator.setDuration(200);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(alphaAnimator,animator);
+        animatorSet.start();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -609,19 +569,10 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
-    /**
-     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
-     */
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale+0.5f);
     }
 
-    /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
-     */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-}
+
+//                    ViewGroup.LayoutParams params =  schedule_calendar.getLayoutParams();
+//                    params.height = weekCalendar.getHeight();
+//                    schedule_calendar.setLayoutParams(params);
+
