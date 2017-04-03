@@ -196,7 +196,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:animateLayoutChanges="false"
             android:id="@+id/schedule_day_mon"
             android:layout_width="0dp"
             app:layout_columnWeight="1"
@@ -207,7 +207,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:animateLayoutChanges="false"
             android:id="@+id/schedule_day_tues"
             android:layout_width="0dp"
             app:layout_columnWeight="1"
@@ -218,7 +218,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:animateLayoutChanges="false"
             android:id="@+id/schedule_day_wed"
             android:layout_width="0dp"
             app:layout_columnWeight="1"
@@ -229,7 +229,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:animateLayoutChanges="false"
             android:id="@+id/schedule_day_thur"
             android:layout_width="0dp"
             app:layout_columnWeight="1"
@@ -240,7 +240,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:animateLayoutChanges="false"
             android:id="@+id/schedule_day_fri"
             android:layout_width="0dp"
             app:layout_columnWeight="1"
@@ -251,7 +251,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:animateLayoutChanges="false"
             android:id="@+id/schedule_day_sat"
             android:layout_width="0dp"
             app:layout_columnWeight="1"
@@ -262,7 +262,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:animateLayoutChanges="false"
             android:id="@+id/schedule_day_sun"
             android:layout_width="0dp"
             app:layout_columnWeight="1"
