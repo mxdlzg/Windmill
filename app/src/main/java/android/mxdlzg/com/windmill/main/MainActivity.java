@@ -125,11 +125,16 @@ public class MainActivity extends AppCompatActivity {
         initSetting();
 
         ManageCookie manageCookie = new ManageCookie(this);
-
-
+        manageCookie.getNetCookieFromCache();
+        CookieManager cookieManager;
+        //如果时间大于15分钟，就设置一个新的，否则读取旧cookie并继续使用
+        if ((System.currentTimeMillis()-manageCookie.getNetCacheTime())>15*60*60){
+            cookieManager = new CookieManager();
+            cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        }else {
+            cookieManager = new CookieManager(manageCookie.getNetCookieStore(),CookiePolicy.ACCEPT_ALL);
+        }
         //设置默认cookieManager
-        CookieManager cookieManager = new CookieManager();
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(cookieManager);
 
         //niceSpinner设置
@@ -160,17 +165,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             classList = new ArrayList<>();
         }
-
-        //imageview
-        View headerView = navigationView.inflateHeaderView(R.layout.layout_main_nav_header);
-        imageView = (ImageView)(headerView.findViewById(R.id.drawer_imageView));
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
-            }
-        });
-
 
         //获取calendarview
         weekCalendar = (WeekCalendar) findViewById(R.id.schedule_weekCalendar);
@@ -225,6 +219,16 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 return true;
+            }
+        });
+
+        //imageview
+        View headerView = navigationView.inflateHeaderView(R.layout.layout_main_nav_header);
+        imageView = (ImageView)(headerView.findViewById(R.id.drawer_imageView));
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         });
     }
