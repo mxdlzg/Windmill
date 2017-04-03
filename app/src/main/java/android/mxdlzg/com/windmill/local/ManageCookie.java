@@ -48,6 +48,14 @@ public class ManageCookie {
     }
 
     /**
+     * @return 存储的java net cookieStore的存储时间
+     */
+    public long getNetCacheTime(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Config.NET_COOKIE_CACHE,Context.MODE_PRIVATE);
+        return sharedPreferences.getLong("time",0);
+    }
+
+    /**
      * 存储java net cookieStore到文件
      */
     public void cacheNetCookie(){
