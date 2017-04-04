@@ -54,5 +54,21 @@ public class wdUtil {
         }
     }
 
+    /**
+     * 获取week增量
+     * @param oldTime 选择当前周的那个日期
+     * @param currentTime 当前日期
+     * @return 要对currentWeek做的增量
+     */
+    public static int getIncrement(Long oldTime,Long currentTime){
+        Long timeStamp = currentTime-oldTime;
+        if (timeStamp <= 0 || oldTime == 0){
+            return 0;
+        }else {
+            timeStamp = timeStamp/(1000*60*60*24);
+            return Integer.valueOf(String.valueOf(timeStamp/7));
+        }
+    }
+
 
 }
