@@ -129,9 +129,11 @@ public class MainActivity extends AppCompatActivity {
         CookieManager cookieManager;
         //如果时间大于15分钟，就设置一个新的，否则读取旧cookie并继续使用
         if ((System.currentTimeMillis()-manageCookie.getNetCacheTime())>15*60*60){
+            Toast.makeText(this, "cookie过期", Toast.LENGTH_SHORT).show();
             cookieManager = new CookieManager();
             cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         }else {
+            Toast.makeText(this, "读取已存储的cookie", Toast.LENGTH_SHORT).show();
             cookieManager = new CookieManager(manageCookie.getNetCookieStore(),CookiePolicy.ACCEPT_ALL);
         }
         //设置默认cookieManager
@@ -440,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
                         cursor++;
                     }else {
                         if (!table[day][index]){
-                            View view = (View)getLayoutInflater().inflate(R.layout.schedule_view,linearLayouts[day],true).findViewById(R.id.schedule_small_view);
+                            View view = getLayoutInflater().inflate(R.layout.schedule_view,linearLayouts[day],true).findViewById(R.id.schedule_small_view);
                             table[day][index] = true;
                         }
                     }
