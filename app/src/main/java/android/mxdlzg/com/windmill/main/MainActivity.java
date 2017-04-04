@@ -71,6 +71,7 @@ import java.util.Random;
 import noman.weekcalendar.WeekCalendar;
 
 import static android.mxdlzg.com.windmill.util.wdUtil.dip2px;
+import static android.mxdlzg.com.windmill.util.wdUtil.getIncrement;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -239,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void initSetting(){
         currentId = ManageSetting.getLongSetting(this,"id");
-        currentWeek = ManageSetting.getIntSetting(this,"currentWeek");
+        currentWeek = ManageSetting.getIntSetting(this,"currentWeek")+getIncrement(ManageSetting.getLongSetting(this,"time"),System.currentTimeMillis());
     }
 
     /**
