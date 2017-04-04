@@ -21,20 +21,17 @@
         <activity android:name=".main.ShowClassDetail">
 
         </activity>
-        <activity android:name=".main.LoginActivity"
+        <activity
+            android:name=".main.LoginActivity"
             android:theme="@style/AppTheme.NoTitle_FullScreen">
 
         </activity>
-
         <activity android:name=".main.AddScheduleActivity">
 
         </activity>
-
         <activity android:name=".main.SettingActivity">
 
         </activity>
-
-
     </application>
 
 </manifest>
