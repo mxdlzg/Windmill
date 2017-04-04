@@ -84,4 +84,15 @@ public class ManageSetting {
         return sharedPreferences.getLong(name,0);
     }
 
+    /**
+     * 获取int设置
+     * @param context
+     * @param name
+     * @return
+     */
+    public static int getIntSetting(Context context,String name){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Config.SETTING,Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(name,0);
+    }
+
 }
