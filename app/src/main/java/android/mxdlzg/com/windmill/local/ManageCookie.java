@@ -66,7 +66,7 @@ public class ManageCookie {
         editor.putInt("count",cookies.size());
         editor.apply();
         for (int i = 0;i<cookies.size();i++){
-            editor.putString(String.valueOf(i),cookies.get(i).getDomain()+";"+cookies.get(i).getName()+"="+cookies.get(i).getValue());
+            editor.putString(String.valueOf(i),cookies.get(i).getDomain()+";"+cookies.get(i).getName()+"="+cookies.get(i).getValue()+";"+cookies.get(i).getPath()+";"+cookies.get(i).getVersion());
             editor.apply();
         }
     }
@@ -80,14 +80,16 @@ public class ManageCookie {
         }
         SharedPreferences sharedPreferences = context.getSharedPreferences(Config.NET_COOKIE_CACHE,Context.MODE_PRIVATE);
         int count = sharedPreferences.getInt("count",0);
-        long time = sharedPreferences.getLong("time",0);
         for (int i = 0;i<count;i++){
             String cookieData = sharedPreferences.getString(String.valueOf(i),"");
-            String domain = cookieData.split(";")[0];
-            String value = cookieData.split(";")[1];
+            String[] config = cookieData.split(";");
             try {
-                netCookieStore.add(new URI(domain),new HttpCookie(value.split("=")[0],value.split("=")[1]));
-                System.out.println("add"+domain+":"+value);
+                HttpCookie cookie = new HttpCookie(config[1].split("=")[0],config[1].split("=")[1]);
+                cookie.setDomain(config[0]);
+                cookie.setPath(config[2]);
+                cookie.setVersion(0);
+                netCookieStore.add(new URI(config[0]),cookie);
+                System.out.println("add"+config.toString());
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
