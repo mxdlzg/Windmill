@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         CookieManager cookieManager;
         //如果时间大于15分钟，就设置一个新的，否则读取旧cookie并继续使用
         if ((System.currentTimeMillis()-manageCookie.getNetCacheTime())>15*60*60){
-            Toast.makeText(this, "cookie过期", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "cookie过期,请重新登录（暂时使用手动模式）", Toast.LENGTH_SHORT).show();
             cookieManager = new CookieManager();
             cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         }else {
@@ -144,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
         List<String> dataset = new LinkedList<>(Arrays.asList("第1周", "第2周", "第3周", "第4周", "第5周", "第6周", "第7周", "第8周", "第9周", "第10周", "第11周", "第12周", "第13周", "第14周", "第15周", "第16周", "第17周", "第18周", "第19周", "第20周"));
         niceSpinner.attachDataSource(dataset);
         niceSpinner.setTextColor(getColor(R.color.white));
-        if (currentWeek-1 >= 0){
-            niceSpinner.setSelectedIndex(currentWeek-1);
+        if (currentWeek >= 0){
+            niceSpinner.setSelectedIndex(currentWeek);
         }
         niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -195,11 +195,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_camera:
-                        break;
-                    case R.id.nav_gallery:
-                        drawerLayout.closeDrawers();
-                        break;
                     case R.id.nav_slideshow:
                         drawerLayout.closeDrawers();
                         classList = ManageClassOBJ.getClassList(MainActivity.this,2016220172);
@@ -210,6 +205,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_manage:
                         drawerLayout.closeDrawers();
                         prepareScheduleTable(currentWeek);
+                        break;
+                    case R.id.main_menu_setting:
+                        drawerLayout.closeDrawers();
+                        startActivity(new Intent(MainActivity.this,SettingActivity.class));
                         break;
                     default:
                         drawerLayout.closeDrawers();
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void initSetting(){
         currentId = ManageSetting.getLongSetting(this,"id");
-        currentWeek = 6;
+        currentWeek = ManageSetting.getIntSetting(this,"currentWeek");
     }
 
     /**
@@ -399,8 +398,8 @@ public class MainActivity extends AppCompatActivity {
 
         List<ClassOBJ> tempList = new ArrayList<>();
         for (ClassOBJ obj : classList){
-            if (thisWeek-1 < obj.getWeeks().length){
-                if (obj.getWeek(thisWeek-1) != null && !obj.getWeek(thisWeek-1).equals("")){
+            if (thisWeek < obj.getWeeks().length){
+                if (obj.getWeek(thisWeek) != null && !obj.getWeek(thisWeek).equals("")){
                     tempList.add(obj);
                 }
             }
@@ -416,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (tempList.size()!=0&&tempOBJ.getDay() == (day+1) && tempOBJ.getIndex() == (index+1)) { //如果上课地点不为空（这周没课） 【todo并且 没有名字】
                         final AppCompatButton button = (AppCompatButton) getLayoutInflater().inflate(R.layout.button_blue,linearLayouts[day],false).findViewById(R.id.button);
-                        button.setText(tempOBJ.getName()+"@"+tempOBJ.getWeek(thisWeek-1));
+                        button.setText(tempOBJ.getName()+"@"+tempOBJ.getWeek(thisWeek));
                         ViewGroup.LayoutParams params = button.getLayoutParams();
                         params.height =dip2px(this,tempOBJ.getNum()*60);
                         button.setLayoutParams(params);
@@ -536,7 +535,7 @@ public class MainActivity extends AppCompatActivity {
                 classList = ManageClassOBJ.getClassList(this,currentId);
                 prepareScheduleTable(currentWeek);
                 ManageSetting.addLongSetting(this,"id",currentId);
-                niceSpinner.setSelectedIndex(currentWeek-1);
+                niceSpinner.setSelectedIndex(currentWeek);
                 break;
             default:
                 break;
