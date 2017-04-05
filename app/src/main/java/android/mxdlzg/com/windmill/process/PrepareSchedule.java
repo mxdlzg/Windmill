@@ -63,7 +63,7 @@ public class PrepareSchedule {
                     Matcher matchers = patterns.matcher(week);
                     if (matchers.find()) {
                         start = Integer.valueOf(matchers.group().split("-")[0]);
-                        if (matchers.group().length() > 1) {
+                        if (matchers.group().length() > 1 && matchers.group().split("-").length>1){
                             end = Integer.valueOf(matchers.group().split("-")[1]);
                         } else {
                             end = start;
