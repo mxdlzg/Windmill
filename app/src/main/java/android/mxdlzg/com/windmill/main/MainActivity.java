@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                prepareScheduleTable(position+1);
+                prepareScheduleTable(position);
             }
 
             @Override
