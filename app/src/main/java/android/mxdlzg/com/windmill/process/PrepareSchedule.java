@@ -126,3 +126,7 @@ public class PrepareSchedule {
         return classOBJList;
     }
 }
+
+// TODO: 2017/4/5 全新解析思路：使用二维数组保存当前table的信息，上层解析过的rowspan后在二维数组对应位置true 
+// TODO: 2017/4/5 解析指针由x7，y12来控制，扫描每一个空格。解析一个位置的空格时优先判定是否因为上层rowspan而被改变 
+// TODO: 2017/4/5 如果改变则day加一，越过此格；否则继续读取一个td判断smash（此时一定要顺序读取td），分析smash完毕后无论是否有信息day都加一，继续解析下个格子 
