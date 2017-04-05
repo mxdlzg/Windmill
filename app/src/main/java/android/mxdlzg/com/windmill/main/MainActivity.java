@@ -389,6 +389,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 为layout准备课程表并显示
+     * @param thisWeek 0开始
+     */
     public void prepareScheduleTable(int thisWeek){
         int cursor = 0;
         int[] colors = new int[12];
