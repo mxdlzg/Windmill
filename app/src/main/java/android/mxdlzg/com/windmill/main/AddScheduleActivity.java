@@ -47,7 +47,7 @@ public class AddScheduleActivity extends AppCompatActivity {
     private View newTermView;
     private AddScheduleAdapter addScheduleAdapter;
 
-    private String[] termTime = {"2016220172"};
+    private String[] termTime = {"2016220171","2016220172"};
     private List<TermOBJ> list = new ArrayList<>();
 
     private Handler handler_notifiy_add;
@@ -94,7 +94,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 newTermView = LayoutInflater.from(AddScheduleActivity.this).inflate(R.layout.layout_schedule_new_term,null);
                 //picker
                 yearPicker = (NumberPicker) newTermView.findViewById(R.id.schedule_add_year_picker);
-                String[] years = {"2017春"};
+                String[] years = {"2016秋","2017春"};
                 yearPicker.setDisplayedValues(years);
                 yearPicker.setMaxValue(years.length-1);
                 yearPicker.setMinValue(0);
@@ -102,7 +102,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 yearPicker.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
 
                 termPicker = (NumberPicker) newTermView.findViewById(R.id.schedule_add_term_picker);
-                String[] terms = {"2016-2017第2学期"};
+                String[] terms = {"2016-2017第1学期","2016-2017第2学期"};
                 termPicker.setDisplayedValues(terms);
                 termPicker.setMaxValue(terms.length-1);
                 termPicker.setMinValue(0);
@@ -147,7 +147,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                                 String name = termPicker.getDisplayedValues()[termPicker.getValue()];
                                 int start = Integer.valueOf(name.substring(0,4));
                                 int end = Integer.valueOf(name.substring(5,9));
-                                int num = termPicker.getValue()==0?2:1;
+                                int num = Integer.valueOf(name.substring(10,11));
                                 Long id = Long.valueOf((start+"2"+end+num).toString());
                                 TermOBJ termOBJ = new TermOBJ(name,start,end,num,id);
                                 list.add(termOBJ);
