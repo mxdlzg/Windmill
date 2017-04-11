@@ -8,6 +8,8 @@ import android.mxdlzg.com.windmill.local.ManageCookie;
 import android.mxdlzg.com.windmill.net.GetCookie;
 import android.mxdlzg.com.windmill.net.GetCookieTest;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,21 @@ public class LoginActivity extends AppCompatActivity{
     private AppCompatButton buttonLogin;
     private TextInputLayout userLayout;
     private TextInputLayout passwordLayout;
+    private Handler messageHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    Toast.makeText(LoginActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+                    break;
+                case 1:
+                    LoginActivity.this.finish();
+                    break;
+                default:break;
+            }
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,11 +102,18 @@ public class LoginActivity extends AppCompatActivity{
                 ManageCookie manageCookie = new ManageCookie(LoginActivity.this);
                 manageCookie.setNetCookieStore(cookieStore);
                 manageCookie.cacheNetCookie();
+                Message message = new Message();
+                message.what = 1;
+                messageHandler.sendMessage(message);
             }
         }, new GetCookieTest.FailCallback() {
             @Override
             public void onFail() {
                 dialog.dismiss();
+                Message message = new Message();
+                message.obj = "登录失败";
+                message.what = 0;
+                messageHandler.sendMessage(message);
             }
         },null,null);
         return 0;
