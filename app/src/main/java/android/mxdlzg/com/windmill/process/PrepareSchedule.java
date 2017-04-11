@@ -26,101 +26,148 @@ import java.util.regex.Pattern;
  */
 
 public class PrepareSchedule {
-    List<ClassOBJ> classOBJList = new ArrayList<>();
 
-    public List<ClassOBJ> getList(String result) {
-        Document document = Jsoup.parse(result, "utf-8");
+    public List<ClassOBJ> getList(String result,boolean override) {
+        List<ClassOBJ> classOBJList = new ArrayList<>();
+        boolean table[][] = new boolean[12][7];
+
+        Document document = Jsoup.parse(result,"utf-8");
         Elements elements = document.select("tr[bgcolor]");
 
-
-        for (int indexs = 0; indexs < 12; indexs++) {   //行
-            Elements classes = elements.get(indexs).children(); //一行的所有格子
-            if (indexs < 2 || indexs > 12) {          //控制分析的行数
+        for (int indexs = 0;indexs<14;indexs++){
+            if (indexs<2) {
                 continue;
             }
-            for (int days = 0; days < classes.size(); days++) {  //每行的每个格子，day代表格子所在的周几
-                Elements smash = classes.get(days).select("div[name='d1']");        //一个格子中课程的破碎状态
-                if (smash.size() == 0) {
+            Elements classes = elements.get(indexs).children();
+            int count = classes.size();
+            int cursor = 1;
+            for (int days = 0;days<7;days++){
+                if (table[indexs-2][days]){
+                    //如果这个格子已经被写入信息,横向下一个
+//                    cursor++;
                     continue;
-                }
+                }else {
+                    //否则，读取一个
+                    table[indexs-2][days] = true;
+                    Elements smash = classes.get(cursor).select("div[name='d1']");
+                    if (smash.size()==0){
+                        //如果信息依然为空,处理完毕，横向下一个
+                        cursor++;
+                        continue;
+                    }else {
+                        //临时变量
+                        int tempCursor = cursor;
+                        cursor++;
+                        //否则确定为由碎片,处理这些信息
+                        List<String> names = new ArrayList<>(); //唯一性信息判据
+                        List<String> teachers = new ArrayList<>(); //唯一性信息判据
+                        Map<String,Integer> list_obj_pair = new HashMap<>(); //唯一性信息组
 
-                List<String> names = new ArrayList<>();
-                List<String> teachers = new ArrayList<>();
-                Map<String, Integer> list_obj_pair = new HashMap<>();
+                        //临时变量
+                        String name = "",week = "",position = "",teacher = "";
+                        int start = 0,end = 0;
 
-                String name = "", week = "", position = "", teacher = "";
-                int start = 0, end = 0;
+                        //开始处理碎片
+                        for (Element sms:smash){
+                            //基本信息
+                            name = sms.childNode(0).attr("text");
+                            teacher = sms.childNode(4).attr("text").split(" ")[1];
+                            week = sms.childNode(2).attr("text").split(" ")[0];
+                            position = sms.childNode(2).attr("text").split(" ")[1];
 
-                for (Element sms : smash) {
-                    name = sms.childNode(0).attr("text");
-                    teacher = sms.childNode(4).attr("text").split(" ")[1];
-                    week = sms.childNode(2).attr("text").split(" ")[0];
-                    position = sms.childNode(2).attr("text").split(" ")[1];
+                            //匹配周数
+                            String regexs = "(?<=(第)).*?(?=(周))";
+                            Pattern patterns = Pattern.compile(regexs);
+                            Matcher matchers = patterns.matcher(week);
+                            if (matchers.find()){
+                                start = Integer.valueOf(matchers.group().split("-")[0]);
+                                if (matchers.group().length() > 1 && matchers.group().split("-").length>1){
+                                    end = Integer.valueOf(matchers.group().split("-")[1]);
+                                }else {
+                                    end = start;
+                                }
+                            }
 
-                    //匹配周数
-                    String regexs = "(?<=(第)).*?(?=(周))";
-                    Pattern patterns = Pattern.compile(regexs);
-                    Matcher matchers = patterns.matcher(week);
-                    if (matchers.find()) {
-                        start = Integer.valueOf(matchers.group().split("-")[0]);
-                        if (matchers.group().length() > 1 && matchers.group().split("-").length>1){
-                            end = Integer.valueOf(matchers.group().split("-")[1]);
-                        } else {
-                            end = start;
+                            //开始构造Object,如果是构造则新建，否则追加信息
+                            if (!names.contains(name) && !teachers.contains(teacher)){ //确定是已经存在（唯一性）
+                                //虚拟table对位补齐
+                                for (int i =0;i<Integer.valueOf(classes.get(tempCursor).attr("rowspan"));i++){
+                                    table[indexs-2+i][days] = true;
+                                }
+                                //新建Object
+                                ClassOBJ newClass = new ClassOBJ();
+                                newClass.setName(name);
+                                newClass.setTecher(teacher);
+                                newClass.setDay(days+1);
+                                newClass.setIndex(indexs-1);
+                                newClass.setWeeks(new String[20]);
+                                newClass.setNum(Integer.valueOf(classes.get(tempCursor).attr("rowspan")));
+                                //设置第一个碎片得到的数据
+                                if (sms.html().contains("**")){
+                                    //如果是双周
+                                    for (int i = (start%2==0?start:start+1);i<=end;i+=2){
+                                        newClass.setWeek(i-1,position);
+                                    }
+                                }else if (sms.html().contains("*")){
+                                    //如果是单周
+                                    for (int i = (start%2==0?start+1:start);i<=end;i+=2){
+                                        newClass.setWeek(i-1,position);
+                                    }
+                                }else {
+                                    //如果是正常
+                                    for (int i = start;i<=end;i++){
+                                        newClass.setWeek(i-1,position);
+                                    }
+                                }
+                                //将新课程信息写入链表
+                                classOBJList.add(newClass);
+                                names.add(name);
+                                teachers.add(teacher);
+                                list_obj_pair.put(sms.childNode(0).attr("text"),classOBJList.size()-1);
+                            }else {
+                                ClassOBJ newClass = classOBJList.get(list_obj_pair.get(name));
+                                //设置接下来分析得到的碎片信息
+                                if (sms.html().contains("**")){
+                                    //如果是双周
+                                    for (int i = (start%2==0?start:start+1);i<=end;i+=2){
+                                        if (override){
+                                            newClass.setWeek(i-1,position);
+                                        }else {
+                                            if (newClass.getWeeks()[i-1] == null){
+                                                newClass.setWeek(i-1,position);
+                                            }
+                                        }
+                                    }
+                                }else if (sms.html().contains("*")){
+                                    //如果是单周
+                                    for (int i = (start%2==0?start+1:start);i<=end;i+=2){
+                                        if (override){
+                                            newClass.setWeek(i-1,position);
+                                        }else {
+                                            if (newClass.getWeeks()[i-1] == null){
+                                                newClass.setWeek(i-1,position);
+                                            }
+                                        }
+                                    }
+                                }else {
+                                    //如果是正常
+                                    for (int i = start;i<=end;i++){
+                                        if (override){
+                                            newClass.setWeek(i-1,position);
+                                        }else {
+                                            if (newClass.getWeeks()[i-1] == null){
+                                                newClass.setWeek(i-1,position);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-
-                    if (!names.contains(name) && !teachers.contains(teacher)) {
-                        ClassOBJ classOBJ = new ClassOBJ();
-                        classOBJ.setName(name);
-                        classOBJ.setTecher(teacher);
-                        classOBJ.setDay(days);
-                        classOBJ.setIndex(indexs - 1);
-                        classOBJ.setWeeks(new String[20]);
-                        classOBJ.setNum(Integer.valueOf(classes.get(days).attr("rowspan")));
-
-                        //设置第一次分析的数据
-                        if (sms.html().contains("**")) {
-                            //设置每周上课地点
-                            for (int i = (start % 2 == 0 ? start : start + 1); i <= end; i += 2) {
-                                classOBJ.setWeek(i - 1, position);
-                            }
-                        } else if (sms.html().contains("*")) {
-                            for (int i = (start % 2 == 0 ? start + 1 : start); i <= end; i += 2) {
-                                classOBJ.setWeek(i - 1, position);
-                            }
-                        } else {
-                            for (int i = start; i <= end; i++) {
-                                classOBJ.setWeek(i - 1, position);
-                            }
-                        }
-
-                        classOBJList.add(classOBJ);
-                        names.add(name);
-                        teachers.add(teacher);
-                        list_obj_pair.put(sms.childNode(0).attr("text"), classOBJList.size() - 1);
-                    } else {
-                        ClassOBJ currentOBJ = classOBJList.get(list_obj_pair.get(name));
-
-                        //设置第一次分析的数据
-                        if (sms.html().contains("**")) {
-                            //设置每周上课地点
-                            for (int i = (start % 2 == 0 ? start : start + 1); i <= end; i += 2) {
-                                currentOBJ.setWeek(i - 1, position);
-                            }
-                        } else if (sms.html().contains("*")) {
-                            for (int i = (start % 2 == 0 ? start + 1 : start); i <= end; i += 2) {
-                                currentOBJ.setWeek(i - 1, position);
-                            }
-                        } else {
-                            for (int i = start; i <= end; i++) {
-                                currentOBJ.setWeek(i - 1, position);
-                            }
-                        }
-
-                    }
                 }
+
             }
+
         }
 
         return classOBJList;
