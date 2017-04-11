@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         getSchedule();
                         PrepareSchedule p = new PrepareSchedule();
-                        classList = p.getList(scheduleHTML);
+                        classList = p.getList(scheduleHTML,false);
                         ManageClassOBJ.cacheClassList(MainActivity.this,2016220172,classList);
                         Toast.makeText(MainActivity.this, "本地初始化完毕（今后无需调用）", Toast.LENGTH_SHORT).show();
                         break;
