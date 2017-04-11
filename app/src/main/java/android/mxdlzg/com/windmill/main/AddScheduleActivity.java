@@ -135,7 +135,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                                 getScheduleDialog.setTitle("分析中");
                                 getScheduleDialog.setMessage("正在分析schedule");
                                 PrepareSchedule prepareSchedule = new PrepareSchedule();
-                                List<ClassOBJ> newScheduleList = prepareSchedule.getList(result);
+                                List<ClassOBJ> newScheduleList = prepareSchedule.getList(result,false);
 
                                 //分析
                                 getScheduleDialog.setMessage("正在存储");
