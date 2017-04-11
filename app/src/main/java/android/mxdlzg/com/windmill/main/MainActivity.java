@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         });
