@@ -1,9 +1,12 @@
 package android.mxdlzg.com.windmill.config;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by 廷江 on 2017/3/12.
  */
-public class ClassOBJ {
+public class ClassOBJ implements Parcelable {
     private int num;
     private String name;
     private String position;
@@ -149,4 +152,51 @@ public class ClassOBJ {
         }
         return result;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.num);
+        dest.writeString(this.name);
+        dest.writeString(this.position);
+        dest.writeString(this.techer);
+        dest.writeInt(this.start);
+        dest.writeInt(this.end);
+        dest.writeInt(this.day);
+        dest.writeInt(this.index);
+        dest.writeFloat(this.score);
+        dest.writeByte(this.multiplePos ? (byte) 1 : (byte) 0);
+        dest.writeStringArray(this.weeks);
+    }
+
+    private ClassOBJ(Parcel in) {
+        this.num = in.readInt();
+        this.name = in.readString();
+        this.position = in.readString();
+        this.techer = in.readString();
+        this.start = in.readInt();
+        this.end = in.readInt();
+        this.day = in.readInt();
+        this.index = in.readInt();
+        this.score = in.readFloat();
+        this.multiplePos = in.readByte() != 0;
+        this.weeks = in.createStringArray();
+    }
+
+    public static final Parcelable.Creator<ClassOBJ> CREATOR = new Parcelable.Creator<ClassOBJ>() {
+        @Override
+        public ClassOBJ createFromParcel(Parcel source) {
+            return new ClassOBJ(source);
+        }
+
+        @Override
+        public ClassOBJ[] newArray(int size) {
+            return new ClassOBJ[size];
+        }
+    };
 }
