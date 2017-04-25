@@ -394,9 +394,9 @@ public class MainActivity extends AppCompatActivity {
      * 为layout准备课程表并显示
      * @param thisWeek 0开始
      */
-    public void prepareScheduleTable(int thisWeek){
+    public void prepareScheduleTable(final int thisWeek){
         int cursor = 0;
-        int[] colors = new int[12];
+        final int[] colors = new int[12];
         LinearLayout[] linearLayouts = new LinearLayout[7];
         initLinearLayout(linearLayouts);
         initColors(colors);
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        Random random = new Random();
+        final Random random = new Random();
 
         for (int index = 0;index<12;index++){
             for (int day = 0; day < 7;day++){
@@ -425,14 +425,18 @@ public class MainActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams params = button.getLayoutParams();
                         params.height =dip2px(this,tempOBJ.getNum()*60);
                         button.setLayoutParams(params);
-                        ColorStateList lists = getResources().getColorStateList(colors[random.nextInt(12)]);
+                        final int currentColorIndex = random.nextInt(12);
+                        ColorStateList lists = getResources().getColorStateList(colors[currentColorIndex]);
                         button.setSupportBackgroundTintList(lists);
+                        final ClassOBJ finalTempOBJ = tempOBJ;
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent();
                                 intent.setClass(MainActivity.this,ShowClassDetail.class);
-                                intent.putExtra("name",button.getText());
+                                intent.putExtra("thisWeek",thisWeek);
+                                intent.putExtra("colorIndex",currentColorIndex);
+                                intent.putExtra("classOBJ", finalTempOBJ);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,button,"schedule_detail").toBundle());
                                 }else {
