@@ -196,6 +196,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
+                    case R.id.nav_camera:
+                        drawerLayout.closeDrawers();
+                        startActivity(new Intent(MainActivity.this,ExamActivity.class));
+                        break;
                     case R.id.nav_slideshow:
                         drawerLayout.closeDrawers();
                         classList = ManageClassOBJ.getClassList(MainActivity.this,2016220172);
