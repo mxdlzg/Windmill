@@ -32,6 +32,9 @@
         <activity android:name=".main.SettingActivity">
 
         </activity>
+        <activity android:name=".main.ExamActivity">
+
+        </activity>
     </application>
 
 </manifest>
