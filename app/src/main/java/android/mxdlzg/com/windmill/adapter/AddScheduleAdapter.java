@@ -23,19 +23,29 @@ public class AddScheduleAdapter extends RecyclerView.Adapter<AddScheduleAdapter.
     private List<TermOBJ> list;
     private Context context;
 
+    /**
+     * @param context context
+     * @param list 课程表list
+     */
     public AddScheduleAdapter(Context context,List<TermOBJ> list){
         this.context = context;
         this.list = list;
     }
 
-
-
-
+    /**
+     * @param parent parent
+     * @param viewType type
+     * @return 返回view
+     */
     public AddScheduleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.schedule_add_rcy_item,parent,false);
         return new ViewHolder(view);
     }
 
+    /**
+     * @param holder holder
+     * @param position 位置
+     */
     @Override
     public void onBindViewHolder(final AddScheduleAdapter.ViewHolder holder, final int position) {
         TermOBJ termOBJ = list.get(position);
@@ -52,11 +62,13 @@ public class AddScheduleAdapter extends RecyclerView.Adapter<AddScheduleAdapter.
         });
     }
 
+    /**
+     * @return 返回list大小
+     */
     @Override
     public int getItemCount() {
         return list.size();
     }
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView name;
