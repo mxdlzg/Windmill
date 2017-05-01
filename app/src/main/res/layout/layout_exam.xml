@@ -12,11 +12,16 @@
         android:layout_height="wrap_content">
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_below="@id/exam_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/exam_recyclerView">
-    </android.support.v7.widget.RecyclerView>
+        android:id="@+id/exam_swipeLayout"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/exam_recyclerView">
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
