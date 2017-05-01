@@ -7,6 +7,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.content.ContentValues.TAG;
 
 /**
@@ -14,13 +17,13 @@ import static android.content.ContentValues.TAG;
  */
 
 public class PrepareExam {
-    private String[] result;
+    private List<String> result = new ArrayList<>();
 
     /**
      * @param examHTML exam页面源码
      * @return 返回一个考试表的数组，一行为一个考试，使用‘；’隔开属性
      */
-    public String[] getExam(String examHTML){
+    public List<String> getExam(String examHTML){
         //开始解析
         Document document = Jsoup.parse(examHTML,"utf-8");
         Elements tables = document.select("table");
@@ -29,7 +32,6 @@ public class PrepareExam {
             //如果找到
             if (table.child(0).child(0).text().equals("我的考试")){
                 //初始化参数
-                result = new String[table.child(0).childNodeSize()-3];
                 int index = 0;
                 //遍历取每一条考试
                 for (Element tr : table.child(0).children()){
@@ -38,7 +40,7 @@ public class PrepareExam {
                         String time = tr.child(2).text();
                         String place = tr.child(3).text();
                         String property = tr.child(4).text();
-                        result[index] = name+";"+time+";"+place+";"+property;
+                        result.add(name+";"+time+";"+place+";"+property);
                         index++;
                     }
                 }
