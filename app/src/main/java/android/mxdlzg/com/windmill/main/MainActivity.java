@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         manageCookie.getNetCookieFromCache();
         CookieManager cookieManager;
         //如果时间大于15分钟，就设置一个新的，否则读取旧cookie并继续使用
-        if ((System.currentTimeMillis()-manageCookie.getNetCacheTime())>15*60*60){
+        if ((System.currentTimeMillis()-manageCookie.getNetCacheTime())>15*60*1000){
             Toast.makeText(this, "cookie过期,请重新登录（暂时使用手动模式）", Toast.LENGTH_SHORT).show();
             cookieManager = new CookieManager();
             cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
