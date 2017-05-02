@@ -11,20 +11,30 @@ import java.util.List;
  */
 
 public class ManageExam {
+    /**
+     * 存储exams
+     * @param context context
+     * @param exams exam list
+     */
     public static void cacheExam(Context context, List<String> exams){
         SharedPreferences.Editor editor = context.getSharedPreferences("exam",Context.MODE_PRIVATE).edit();
+        //清空
         editor.clear();
         editor.apply();
-
+        //写入count
         editor.putInt("count",exams.size());
         editor.apply();
-
+        //循环写入
         for (int i = 0;i<exams.size();i++){
             editor.putString(String.valueOf(i),exams.get(i));
         }
         editor.apply();
     }
 
+    /**
+     * @param context context
+     * @return 返回exam List<String>
+     */
     public static List<String> getExamList(Context context){
         List<String> result = new ArrayList<>();
         SharedPreferences sharedPreferences = context.getSharedPreferences("exam",Context.MODE_PRIVATE);
