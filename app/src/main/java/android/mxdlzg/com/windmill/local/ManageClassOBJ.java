@@ -14,11 +14,12 @@ import java.util.List;
 
 public class ManageClassOBJ {
 
-
-    public ManageClassOBJ() {
-
-    }
-
+    /**
+     * 将ClassOBJ的list存储到文件中，将时间作为uid
+     * @param context context
+     * @param time 被存储的时间，暂时读取系统时间（可能会产生未知错误）
+     * @param list 待存储的classobj list
+     */
     public static void cacheClassList(Context context,long time,List<ClassOBJ> list){
         SharedPreferences.Editor editor = context.getSharedPreferences(Config.CLASSOBJ_CACHE+time,Context.MODE_PRIVATE).edit();
         editor.clear().apply();
@@ -29,6 +30,12 @@ public class ManageClassOBJ {
         }
     }
 
+    /**
+     * 存储一个obj
+     * @param editor SharedPreferences.Editor
+     * @param classOBJ 待存储的classOBJ
+     * @param index 在list中的位置
+     */
     public static void cacheOBJ(SharedPreferences.Editor editor,ClassOBJ classOBJ,int index){
         String config = classOBJ.getALL();
         editor.putString("config"+index,config);
@@ -37,6 +44,11 @@ public class ManageClassOBJ {
         editor.apply();
     }
 
+    /**
+     * @param context context
+     * @param time 时间，uid
+     * @return 返回存储到文件中的classOBJ的list
+     */
     public static List<ClassOBJ> getClassList(Context context,long time){
         SharedPreferences sharedPreferences = context.getSharedPreferences(Config.CLASSOBJ_CACHE+time,Context.MODE_PRIVATE);
         int size = sharedPreferences.getInt("count",0);
@@ -47,6 +59,11 @@ public class ManageClassOBJ {
         return list;
     }
 
+    /**
+     * @param sharedPreferences shared
+     * @param index index
+     * @return 返回一个ClassOBJ
+     */
     public static ClassOBJ getOBJ(SharedPreferences sharedPreferences,int index){
         String[] config = sharedPreferences.getString("config"+index,"").split(";");
         String[] weeks = sharedPreferences.getString("weeks"+index,"").split(",");
