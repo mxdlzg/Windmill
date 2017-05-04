@@ -6,6 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey50"
+        android:transitionName="schedule_background" tools:targetApi="LOLLIPOP" />
+
     <ImageView
         android:transitionName="schedule_detail" tools:targetApi="LOLLIPOP"
         android:layout_width="match_parent"
