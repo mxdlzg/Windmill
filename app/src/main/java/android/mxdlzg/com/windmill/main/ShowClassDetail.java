@@ -59,6 +59,10 @@ public class ShowClassDetail extends AppCompatActivity {
         button.setText(getIntent().getStringExtra("name"));
     }
 
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
+    }
 
     public void initColors(int[] colors){
         for (int i = 0;i<12;i++){
