@@ -25,6 +25,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -442,7 +444,12 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("colorIndex",currentColorIndex);
                                 intent.putExtra("classOBJ", finalTempOBJ);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,button,"schedule_detail").toBundle());
+                                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,
+                                            android.util.Pair.create(view,"schedule_detail"),
+                                            android.util.Pair.create(view,"schedule_background"));
+//                                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,button,"schedule_detail").toBundle());
+                                    startActivity(intent, options.toBundle());
+
                                 }else {
                                     startActivity(intent);
                                 }
