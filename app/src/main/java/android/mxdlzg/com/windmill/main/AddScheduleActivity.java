@@ -47,7 +47,7 @@ public class AddScheduleActivity extends AppCompatActivity {
     private View newTermView;
     private AddScheduleAdapter addScheduleAdapter;
 
-    private String[] termTime = {"2016220171","2016220172"};
+    private String[] termTime = {"2016220171","2016220172","2017220181","2017220182"};
     private List<TermOBJ> list = new ArrayList<>();
 
     private Handler handler_notifiy_add;
@@ -94,7 +94,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 newTermView = LayoutInflater.from(AddScheduleActivity.this).inflate(R.layout.layout_schedule_new_term,null);
                 //picker
                 yearPicker = (NumberPicker) newTermView.findViewById(R.id.schedule_add_year_picker);
-                String[] years = {"2016秋","2017春"};
+                String[] years = {"2016秋","2017春","2018秋"};
                 yearPicker.setDisplayedValues(years);
                 yearPicker.setMaxValue(years.length-1);
                 yearPicker.setMinValue(0);
@@ -102,7 +102,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 yearPicker.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
 
                 termPicker = (NumberPicker) newTermView.findViewById(R.id.schedule_add_term_picker);
-                String[] terms = {"2016-2017第1学期","2016-2017第2学期"};
+                String[] terms = {"2016-2017第1学期","2016-2017第2学期","2017-2018第1学期"};
                 termPicker.setDisplayedValues(terms);
                 termPicker.setMaxValue(terms.length-1);
                 termPicker.setMinValue(0);
