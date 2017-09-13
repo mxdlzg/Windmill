@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:duration="250"
+    android:transitionOrdering="together">
+
+    <transitionSet>
+        <targets>
+            <target android:targetId="@id/detail_background"/>
+        </targets>
+        <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in"/>
+
+    </transitionSet>
+
+    <transition
+        class="android.mxdlzg.com.windmill.ui.transition.DetailReturn"
+        android:interpolator="@android:interpolator/fast_out_slow_in">
+        <targets>
+            <target android:targetId="@id/schedule_detail_main_imageView" />
+        </targets>
+    </transition>
+
+</transitionSet>

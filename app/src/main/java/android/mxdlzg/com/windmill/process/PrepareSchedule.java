@@ -125,7 +125,13 @@ public class PrepareSchedule {
                                 teachers.add(teacher);
                                 list_obj_pair.put(sms.childNode(0).attr("text"),classOBJList.size()-1);
                             }else {
-                                ClassOBJ newClass = classOBJList.get(list_obj_pair.get(name));
+                                ClassOBJ newClass;
+                                try{
+                                    newClass = classOBJList.get(list_obj_pair.get(name));
+                                }catch (Exception e){
+                                    newClass = classOBJList.get(classOBJList.size()-1);
+                                }
+//                                ClassOBJ newClass = classOBJList.get(list_obj_pair.get(name));
                                 //设置接下来分析得到的碎片信息
                                 if (sms.html().contains("**")){
                                     //如果是双周

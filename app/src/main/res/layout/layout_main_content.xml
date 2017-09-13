@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/main_toolbar"
@@ -33,7 +33,9 @@
 
         </android.support.v7.widget.Toolbar>
 
+    <!--disabled,its no use now! 2017-09-13 18:51:57-->
     <FrameLayout
+        android:visibility="gone"
         android:background="@color/white"
         android:elevation="2dp" tools:targetApi="LOLLIPOP"
         android:orientation="horizontal"
@@ -88,6 +90,7 @@
         </CalendarView>
 
     </FrameLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -274,8 +277,5 @@
 
     </android.support.v7.widget.GridLayout>
     </ScrollView>
-
-
-
 
 </RelativeLayout>

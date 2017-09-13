@@ -5,13 +5,14 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--<item name="android:statusBarColor">@android:color/holo_blue_light</item>-->
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@color/green400</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <item name="colorAccent">@color/green700</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!--<item name="android:windowLightStatusBar" tools:targetApi="23">true</item>-->
     </style>
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">

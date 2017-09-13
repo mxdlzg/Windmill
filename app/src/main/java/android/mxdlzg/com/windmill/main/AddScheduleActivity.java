@@ -94,7 +94,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 newTermView = LayoutInflater.from(AddScheduleActivity.this).inflate(R.layout.layout_schedule_new_term,null);
                 //picker
                 yearPicker = (NumberPicker) newTermView.findViewById(R.id.schedule_add_year_picker);
-                String[] years = {"2016秋","2017春","2018秋"};
+                String[] years = {"2016秋","2017春","2017秋"};
                 yearPicker.setDisplayedValues(years);
                 yearPicker.setMaxValue(years.length-1);
                 yearPicker.setMinValue(0);
@@ -162,6 +162,8 @@ public class AddScheduleActivity extends AppCompatActivity {
                             @Override
                             public void onFail() {
                                 System.out.println("addSchedule中获取课程表失败");
+                                getScheduleDialog.dismiss();
+                                Toast.makeText(AddScheduleActivity.this, "获取课程表失败", Toast.LENGTH_SHORT).show();
                             }
                         },"http://ems.sit.edu.cn:85/student/selCourse/syllabuslist.jsp",yearPicker.getDisplayedValues()[yearPicker.getValue()],"1",termPicker.getDisplayedValues()[termPicker.getValue()]);
 
